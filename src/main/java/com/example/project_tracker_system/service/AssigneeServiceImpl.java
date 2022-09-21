@@ -16,7 +16,9 @@ public class AssigneeServiceImpl implements AssigneeService{
     @Override
     public AssigneeDTO createAssignee(AssigneeDTO assigneeDTO) {
 
-        Assignee assignee = Assignee.builder().name(assigneeDTO.getName()).build();
+        Assignee assignee = Assignee.builder()
+                .name(assigneeDTO.getName())
+                .build();
 
         assignee = assigneeRepository.save(assignee);
 
@@ -30,6 +32,9 @@ public class AssigneeServiceImpl implements AssigneeService{
 
         Assignee assignee = assigneeRepository.findById(id).get();
 
-        return AssigneeDTO.builder().id(assignee.getId()).name(assignee.getName()).build();
+        return AssigneeDTO.builder()
+                .id(assignee.getId())
+                .name(assignee.getName())
+                .build();
     }
 }
