@@ -3,19 +3,19 @@ package com.example.project_tracker_system.service;
 import com.example.project_tracker_system.dto.*;
 import com.example.project_tracker_system.entities.Project;
 import com.example.project_tracker_system.repository.ProjectRepository;
-import com.example.project_tracker_system.repository.TaskRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service("ProjectService")
 @AllArgsConstructor
 
-public class ProjectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
 
     @Override
     public ProjectDTO createProject(ProjectDTO projectDTO) {
@@ -34,32 +34,33 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<ProjectInfoDTO> getProjects() {
+
         List<Project> projects = projectRepository.findAll();
 
         return projects.stream()
                 .map(project -> ProjectInfoDTO.builder()
                         .id(project.getId())
                         .name(project.getName())
-                        .tasksCount(taskRepository.countTasks(project.getId()))
+                        .tasksCount(project.getTasks().size())
                         .build()).toList();
     }
 
     @Override
     public ProjectInfoDTO getProjectInfo(Long id) {
 
-        Project project = projectRepository.findById(id).get();
+        Project project = projectRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ProjectInfoDTO.builder()
                 .id(project.getId())
                 .name(project.getName())
-                .tasksCount(taskRepository.countTasks(id))
+                .tasksCount(project.getTasks().size())
                 .build();
     }
 
     @Override
     public ProjectInfoFullDTO getProjectInfoFull(Long id) {
 
-        Project project = projectRepository.findById(id).get();
+        Project project = projectRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ProjectInfoFullDTO.builder()
                 .id(project.getId())
@@ -71,7 +72,7 @@ public class ProjectServiceImpl implements ProjectService{
                                         .name(task.getName())
                                         .description(task.getDescription())
                                         .status(task.getStatus())
-                                        .assignee(AssigneeDTO.builder().id(task.getAssigneeId()).name(task.getAssignee().getName()).build())
+                                        .assignee(AssigneeDTO.builder().id(task.getAssignee().getId()).name(task.getAssignee().getName()).build())
                                         .build()).toList()
                 )
                 .build();

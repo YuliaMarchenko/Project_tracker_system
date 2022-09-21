@@ -16,12 +16,12 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping("/tasks")
-    public TaskDTO saveTask(@RequestBody TaskDTO taskDTO){
+    public TaskDTO saveTask(@RequestBody TaskDTO taskDTO) {
         return taskService.createTask(taskDTO);
     }
 
     @GetMapping("/tasks/{id}")
-    public TaskDTO getTaskInfo(@PathVariable("id") Long id){
+    public TaskDTO getTaskInfo(@PathVariable("id") Long id) {
         return taskService.getTask(id);
     }
 }

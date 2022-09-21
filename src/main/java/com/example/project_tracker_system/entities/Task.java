@@ -30,16 +30,10 @@ public class Task {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "project_id", insertable = false, updatable = false)
+    @JoinColumn(name = "project_id")
     private Project project;
 
-    @Column(name = "project_id")
-    private Long projectId;
-
     @ManyToOne
-    @JoinColumn(name = "assignee_id", insertable = false, updatable = false)
+    @JoinColumn(name = "assignee_id")
     private Assignee assignee;
-
-    @Column(name = "assignee_id")
-    private Long assigneeId;
 }

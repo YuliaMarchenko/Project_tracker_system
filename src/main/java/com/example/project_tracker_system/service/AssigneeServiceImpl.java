@@ -4,12 +4,14 @@ import com.example.project_tracker_system.dto.AssigneeDTO;
 import com.example.project_tracker_system.entities.Assignee;
 import com.example.project_tracker_system.repository.AssigneeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service("AssigneeService")
 @AllArgsConstructor
 
-public class AssigneeServiceImpl implements AssigneeService{
+public class AssigneeServiceImpl implements AssigneeService {
 
     private final AssigneeRepository assigneeRepository;
 
@@ -30,7 +32,7 @@ public class AssigneeServiceImpl implements AssigneeService{
     @Override
     public AssigneeDTO getAssignee(Long id) {
 
-        Assignee assignee = assigneeRepository.findById(id).get();
+        Assignee assignee = assigneeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return AssigneeDTO.builder()
                 .id(assignee.getId())

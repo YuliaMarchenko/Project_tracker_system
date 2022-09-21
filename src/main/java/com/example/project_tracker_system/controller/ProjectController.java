@@ -14,23 +14,24 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+
     @PostMapping("/projects")
-    public ProjectDTO saveProject(@RequestBody ProjectDTO projectDTO){
+    public ProjectDTO saveProject(@RequestBody ProjectDTO projectDTO) {
         return projectService.createProject(projectDTO);
     }
 
     @GetMapping("/projects/{id}")
-    public ProjectInfoDTO getProjectInfo(@PathVariable("id") Long id){
+    public ProjectInfoDTO getProjectInfo(@PathVariable("id") Long id) {
         return projectService.getProjectInfo(id);
     }
 
     @GetMapping("/projects")
-    public List<ProjectInfoDTO> getProjects(){
+    public List<ProjectInfoDTO> getProjects() {
         return projectService.getProjects();
     }
 
     @GetMapping("/projects/{id}/full")
-    public ProjectInfoFullDTO getProjectInfoFull(@PathVariable("id") Long id){
+    public ProjectInfoFullDTO getProjectInfoFull(@PathVariable("id") Long id) {
         return projectService.getProjectInfoFull(id);
     }
 }
