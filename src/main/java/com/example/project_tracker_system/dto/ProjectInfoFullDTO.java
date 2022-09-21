@@ -10,9 +10,9 @@ import java.util.List;
 @Getter
 @Setter
 
-public class ProjectResponseDTO {
+public class ProjectInfoFullDTO {
+
     public Long id;
     private String name;
-    private int tasksCount;
-    private List<TaskDTO> tasks;
+    private List<TaskResponseDTO> tasks;
 }

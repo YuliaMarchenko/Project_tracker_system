@@ -4,15 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
 
-public class TaskDTO {
+public class ProjectInfoDTO {
     public Long id;
     private String name;
-    private String description;
-    private String status;
-    private Long assigneeId;
-    private Long projectId;
+    private int tasksCount;
 }

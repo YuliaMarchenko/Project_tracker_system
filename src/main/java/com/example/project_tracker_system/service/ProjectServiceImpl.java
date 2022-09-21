@@ -1,9 +1,6 @@
 package com.example.project_tracker_system.service;
 
-import com.example.project_tracker_system.dto.AssigneeDTO;
-import com.example.project_tracker_system.dto.ProjectDTO;
-import com.example.project_tracker_system.dto.ProjectResponseDTO;
-import com.example.project_tracker_system.dto.TaskDTO;
+import com.example.project_tracker_system.dto.*;
 import com.example.project_tracker_system.entities.Project;
 import com.example.project_tracker_system.repository.ProjectRepository;
 import com.example.project_tracker_system.repository.TaskRepository;
@@ -36,11 +33,11 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectResponseDTO> getProjects() {
+    public List<ProjectInfoDTO> getProjects() {
         List<Project> projects = projectRepository.findAll();
 
         return projects.stream()
-                .map(project -> ProjectResponseDTO.builder()
+                .map(project -> ProjectInfoDTO.builder()
                         .id(project.getId())
                         .name(project.getName())
                         .tasksCount(taskRepository.countTasks(project.getId()))
@@ -48,11 +45,11 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ProjectResponseDTO getProjectInfo(Long id) {
+    public ProjectInfoDTO getProjectInfo(Long id) {
 
         Project project = projectRepository.findById(id).get();
 
-        return ProjectResponseDTO.builder()
+        return ProjectInfoDTO.builder()
                 .id(project.getId())
                 .name(project.getName())
                 .tasksCount(taskRepository.countTasks(id))
@@ -60,16 +57,16 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ProjectResponseDTO getProjectInfoFull(Long id) {
+    public ProjectInfoFullDTO getProjectInfoFull(Long id) {
 
         Project project = projectRepository.findById(id).get();
 
-        return ProjectResponseDTO.builder()
+        return ProjectInfoFullDTO.builder()
                 .id(project.getId())
                 .name(project.getName())
                 .tasks(
                         project.getTasks().stream()
-                                .map(task -> TaskDTO.builder()
+                                .map(task -> TaskResponseDTO.builder()
                                         .id(task.getId())
                                         .name(task.getName())
                                         .description(task.getDescription())

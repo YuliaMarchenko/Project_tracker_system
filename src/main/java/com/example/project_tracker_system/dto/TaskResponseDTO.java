@@ -8,11 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class TaskDTO {
+public class TaskResponseDTO {
     public Long id;
     private String name;
     private String description;
     private String status;
-    private Long assigneeId;
-    private Long projectId;
+    private AssigneeDTO assignee;
 }

@@ -1,7 +1,8 @@
 package com.example.project_tracker_system.controller;
 
 import com.example.project_tracker_system.dto.ProjectDTO;
-import com.example.project_tracker_system.dto.ProjectResponseDTO;
+import com.example.project_tracker_system.dto.ProjectInfoDTO;
+import com.example.project_tracker_system.dto.ProjectInfoFullDTO;
 import com.example.project_tracker_system.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +20,17 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{id}")
-    public ProjectResponseDTO getProjectInfo(@PathVariable("id") Long id){
+    public ProjectInfoDTO getProjectInfo(@PathVariable("id") Long id){
         return projectService.getProjectInfo(id);
     }
 
     @GetMapping("/projects")
-    public List<ProjectResponseDTO> getProjects(){
+    public List<ProjectInfoDTO> getProjects(){
         return projectService.getProjects();
     }
 
     @GetMapping("/projects/{id}/full")
-    public ProjectResponseDTO getProjectInfoFull(@PathVariable("id") Long id){
+    public ProjectInfoFullDTO getProjectInfoFull(@PathVariable("id") Long id){
         return projectService.getProjectInfoFull(id);
     }
 }
