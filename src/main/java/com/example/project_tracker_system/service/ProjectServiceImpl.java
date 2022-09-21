@@ -1,8 +1,10 @@
 package com.example.project_tracker_system.service;
 
 import com.example.project_tracker_system.dto.ProjectDTO;
+import com.example.project_tracker_system.dto.ProjectResponseDTO;
 import com.example.project_tracker_system.entities.Project;
 import com.example.project_tracker_system.repository.ProjectRepository;
+import com.example.project_tracker_system.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class ProjectServiceImpl implements ProjectService{
 
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
 
     @Override
     public ProjectDTO createProject(ProjectDTO projectDTO) {
@@ -29,14 +32,14 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ProjectDTO getProjectInfo(Long id) {
+    public ProjectResponseDTO getProjectInfoWithTasksCount(Long id) {
 
         Project project = projectRepository.findById(id).get();
 
-        return ProjectDTO.builder()
+        return ProjectResponseDTO.builder()
                 .id(project.getId())
                 .name(project.getName())
-                .description(project.getDescription())
+                .tasksCount(taskRepository.countTasks(id))
                 .build();
     }
 }
