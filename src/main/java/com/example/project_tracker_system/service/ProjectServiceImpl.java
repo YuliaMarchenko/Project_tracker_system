@@ -8,6 +8,8 @@ import com.example.project_tracker_system.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("ProjectService")
 @AllArgsConstructor
 
@@ -29,6 +31,18 @@ public class ProjectServiceImpl implements ProjectService{
         projectDTO.setId(project.getId());
 
         return projectDTO;
+    }
+
+    @Override
+    public List<ProjectResponseDTO> getProjects() {
+        List<Project> projects = projectRepository.findAll();
+
+        return projects.stream()
+                .map(project -> ProjectResponseDTO.builder()
+                        .id(project.getId())
+                        .name(project.getName())
+                        .tasksCount(taskRepository.countTasks(project.getId()))
+                        .build()).toList();
     }
 
     @Override

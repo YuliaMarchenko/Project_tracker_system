@@ -6,6 +6,8 @@ import com.example.project_tracker_system.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class ProjectController {
@@ -19,5 +21,10 @@ public class ProjectController {
     @GetMapping("/projects/{id}")
     public ProjectResponseDTO getProjectInfoWithTasksCount(@PathVariable("id") Long id){
         return projectService.getProjectInfoWithTasksCount(id);
+    }
+
+    @GetMapping("/projects")
+    public List<ProjectResponseDTO> getProjects(){
+        return projectService.getProjects();
     }
 }
