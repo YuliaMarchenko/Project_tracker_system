@@ -1,7 +1,9 @@
 package com.example.project_tracker_system.service;
 
+import com.example.project_tracker_system.dto.AssigneeDTO;
 import com.example.project_tracker_system.dto.ProjectDTO;
 import com.example.project_tracker_system.dto.ProjectResponseDTO;
+import com.example.project_tracker_system.dto.TaskDTO;
 import com.example.project_tracker_system.entities.Project;
 import com.example.project_tracker_system.repository.ProjectRepository;
 import com.example.project_tracker_system.repository.TaskRepository;
@@ -46,7 +48,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ProjectResponseDTO getProjectInfoWithTasksCount(Long id) {
+    public ProjectResponseDTO getProjectInfo(Long id) {
 
         Project project = projectRepository.findById(id).get();
 
@@ -54,6 +56,27 @@ public class ProjectServiceImpl implements ProjectService{
                 .id(project.getId())
                 .name(project.getName())
                 .tasksCount(taskRepository.countTasks(id))
+                .build();
+    }
+
+    @Override
+    public ProjectResponseDTO getProjectInfoFull(Long id) {
+
+        Project project = projectRepository.findById(id).get();
+
+        return ProjectResponseDTO.builder()
+                .id(project.getId())
+                .name(project.getName())
+                .tasks(
+                        project.getTasks().stream()
+                                .map(task -> TaskDTO.builder()
+                                        .id(task.getId())
+                                        .name(task.getName())
+                                        .description(task.getDescription())
+                                        .status(task.getStatus())
+                                        .assignee(AssigneeDTO.builder().id(task.getAssigneeId()).name(task.getAssignee().getName()).build())
+                                        .build()).toList()
+                )
                 .build();
     }
 }

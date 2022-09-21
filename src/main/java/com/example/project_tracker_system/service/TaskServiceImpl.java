@@ -7,6 +7,8 @@ import com.example.project_tracker_system.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("TaskService")
 @AllArgsConstructor
 
@@ -46,4 +48,5 @@ public class TaskServiceImpl implements TaskService{
                .status(task.getStatus())
                .build();
     }
+
 }

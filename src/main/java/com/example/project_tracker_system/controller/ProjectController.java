@@ -19,12 +19,17 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{id}")
-    public ProjectResponseDTO getProjectInfoWithTasksCount(@PathVariable("id") Long id){
-        return projectService.getProjectInfoWithTasksCount(id);
+    public ProjectResponseDTO getProjectInfo(@PathVariable("id") Long id){
+        return projectService.getProjectInfo(id);
     }
 
     @GetMapping("/projects")
     public List<ProjectResponseDTO> getProjects(){
         return projectService.getProjects();
+    }
+
+    @GetMapping("/projects/{id}/full")
+    public ProjectResponseDTO getProjectInfoFull(@PathVariable("id") Long id){
+        return projectService.getProjectInfoFull(id);
     }
 }

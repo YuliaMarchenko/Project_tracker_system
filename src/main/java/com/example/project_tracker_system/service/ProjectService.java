@@ -9,5 +9,6 @@ public interface ProjectService {
 
     ProjectDTO createProject(ProjectDTO projectDTO);
     List<ProjectResponseDTO> getProjects();
-    ProjectResponseDTO getProjectInfoWithTasksCount(Long id);
+    ProjectResponseDTO getProjectInfo(Long id);
+    ProjectResponseDTO getProjectInfoFull(Long id);
 }
