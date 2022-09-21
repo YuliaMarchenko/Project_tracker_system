@@ -15,6 +15,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDTO createTask(TaskDTO taskDTO) {
+
         Task task = Task.builder()
                 .name(taskDTO.getName())
                 .description(taskDTO.getDescription())
@@ -30,7 +31,9 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDTO getTask(Long id) {
+
        Task task = taskRepository.findById(id).get();
+
        return TaskDTO.builder()
                .id(task.getId())
                .name(task.getName())
